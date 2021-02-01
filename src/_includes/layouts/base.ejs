@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <title><%= site.title %></title>
+    <meta
+      name="description"
+      content="<%= (!!locals.description) ? description : site.description %>"
+    />
+    <meta name="author" content="<%= site.author %>" />
+    <meta property="og:title" content="<%= site.title %>" />
+    <meta
+      property="og:description"
+      content="<%= (!!locals.description) ? description : site.description %>"
+    />
+    <meta property="og:locale" content="<%= site.locale %>" />
+    <meta property="og:site_name" content="<%= site.site_name %>" />
+    <%- include('webpack.ejs') %> <% if (page.url == "/") { %>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
+    <% } %>
+  </head>
+
+  <body class="antialiased w-full text-gray-700">
+    <div>
+      <header class="flex items-center justify-between w-full px-6 bg-light border-b border-gray-300 py-3">
+        <h2 class="w-1/3 text-xl"><%= site.description %></h2>
+        <h1 class="w-1/3 text-center font-semibold text-3xl text-gray-800"><%= site.title %></h1>
+        <nav class="w-1/3">
+          <ul class="flex justify-end flex-wrap text-xl">
+            <li class="mr-6">
+              <a class="text-gray-700 border-none hover:no-underline hover:text-gray-800" href="/"
+                >Home</a
+              >
+            </li>
+            <li class="">
+              <a
+                class="text-gray-700 border-none hover:no-underline hover:text-gray-800"
+                href="https://github.com/ixartz/Eleventy-Starter-Boilerplate"
+              >
+                GitHub
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <main class=""><%- content %></main>
+
+      <footer class="w-full border-t border-gray-300 text-center py-8">
+        Made with <span role="img" aria-label="Love">♥</span> by
+        <a href="https://creativedesignsguru.com">CreativeDesignsGuru</a>
+        <br>
+        And "heavily" tweaked and owned by 
+        <a href="https://github.com/the-sides">@the-sides</a>
+      </footer>
+    </div>
+  </body>
+</html>
