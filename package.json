@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "My blog",
   "scripts": {
-    "start": "yarn start",
+    "start": "yarn dev",
     "dev": "npm-run-all clean build-dev:webpack --parallel watch:*",
     "build-dev:webpack": "webpack",
     "watch:webpack": "webpack --watch",
