@@ -1,4 +1,5 @@
 # threejs-gallery
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0126b58c-8300-489b-ac9f-a3596310f5a1/deploy-status)](https://app.netlify.com/sites/threejsgallery/deploys)
 Interactive gallery experienced through first-person controls. Powered by threeJS. 
 
 ### [Eleventy Boilerplate from ixartz](https://github.com/ixartz/Eleventy-Starter-Boilerplate) 
