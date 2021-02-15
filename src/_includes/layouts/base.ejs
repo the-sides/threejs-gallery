@@ -20,24 +20,11 @@
     />
     <meta property="og:locale" content="<%= site.locale %>" />
     <meta property="og:site_name" content="<%= site.site_name %>" />
-    <%- include('webpack.ejs') %> <% if (page.url == "/") { %>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', (user) => {
-          if (!user) {
-            window.netlifyIdentity.on('login', () => {
-              document.location.href = '/admin/';
-            });
-          }
-        });
-      }
-    </script>
-    <% } %>
+    <%- include('webpack.ejs') %>
   </head>
 
   <body class="antialiased w-full text-gray-700">
-    <div class="UI-overlay absolute inset-0 w-full h-full bg-dark-50 flex flex-col">
+    <div class="UI-overlay absolute inset-0 w-full h-full bg-dark-50 flex flex-col pointer-events-none">
       <header class="flex items-center justify-between w-full px-6 bg-light border-b border-gray-300 py-3">
         <h2 class="w-1/3 text-xl"><%= site.description %></h2>
         <h1 class="w-1/3 text-center font-semibold text-3xl text-gray-800"><%= site.title %></h1>
