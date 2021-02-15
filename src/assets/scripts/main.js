@@ -1,21 +1,34 @@
 /* eslint-disable no-undef */
-import * as THREE from './threejs/three.module.js';
-import { APP } from './threejs/app.js';
-import { VRButton } from './threejs/VRButton.js';
+import * as THREE from 'three';
 
-window.THREE = THREE; // Used by APP Scripts.
-window.VRButton = VRButton; // Used by APP Scripts.
+let camera; let scene; let
+  renderer;
+let geometry; let material; let
+  mesh;
 
-const loader = new THREE.FileLoader();
-loader.load('app.json', (text) => {
-  const player = new APP.Player();
-  player.load(JSON.parse(text));
-  player.setSize(window.innerWidth, window.innerHeight);
-  player.play();
+function animation(time) {
+  mesh.rotation.x = time / 2000;
+  mesh.rotation.y = time / 1000;
 
-  document.body.appendChild(player.dom);
+  renderer.render(scene, camera);
+}
 
-  window.addEventListener('resize', () => {
-    player.setSize(window.innerWidth, window.innerHeight);
-  });
-});
+function init() {
+  camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
+  camera.position.z = 1;
+
+  scene = new THREE.Scene();
+
+  geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+  material = new THREE.MeshNormalMaterial();
+
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setAnimationLoop(animation);
+  document.body.appendChild(renderer.domElement);
+}
+
+init();

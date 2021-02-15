@@ -64,5 +64,8 @@
     "*.json": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "three": "^0.125.2"
   }
 }
