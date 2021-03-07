@@ -6,11 +6,46 @@ let camera; let scene; let
 let geometry; let material; let
   mesh;
 
-function animation(time) {
-  mesh.rotation.x = time / 2000;
-  mesh.rotation.y = time / 1000;
+const controls = {
+  x: 0,
+  z: 0,
+};
 
+const setupEnvironment = () => {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.BasicShadowMap;
+
+  scene.background = new THREE.Color(0xffffff);
+};
+
+function movementBinds() {
+  window.addEventListener('keydown', (ev) => {
+    const actions = {
+      w: () => { controls.z = -0.01; },
+      s: () => { controls.z = 0.01; },
+      a: () => { controls.x = -0.01; },
+      d: () => { controls.x = 0.01; },
+    };
+    if (actions[ev.key]) actions[ev.key]();
+  });
+  window.addEventListener('keyup', (ev) => {
+    const actions = {
+      w: () => { controls.z = 0; },
+      s: () => { controls.z = 0; },
+      a: () => { controls.x = 0; },
+      d: () => { controls.x = 0; },
+    };
+    if (actions[ev.key]) actions[ev.key]();
+  });
+}
+
+function animate() {
+  requestAnimationFrame(animate);
   renderer.render(scene, camera);
+
+  camera.position.x += controls.x;
+  camera.position.z += controls.z;
 }
 
 function init() {
@@ -19,15 +54,31 @@ function init() {
 
   scene = new THREE.Scene();
 
-  geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
   material = new THREE.MeshNormalMaterial();
 
+  geometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
   mesh = new THREE.Mesh(geometry, material);
+
+  const room = new THREE.BoxGeometry(2, 2, 2);
+  const walls = new THREE.Mesh(room, material);
+
   scene.add(mesh);
+
+  const light = new THREE.AmbientLight(0x404040); // soft white light
+  light.position.set(0.5, 0.5);
+  scene.add(light);
+  scene.add(walls);
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setAnimationLoop(animation);
+
+  setupEnvironment();
+
+  animate();
+
+  movementBinds();
+
+  renderer.render(scene, camera);
   document.body.appendChild(renderer.domElement);
 }
 
